@@ -11,8 +11,11 @@ import SwiftUI
 struct Point: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: .init(x: rect.midX, y: rect.midY))
-//        path.addRoundedRect(in: CGRect  , cornerSize: CGSize(width: 100, height: 100))
+        path.move(to: .init(x: 200, y: 100))
+        path.addLine(to: CGPoint(x: 200, y: 300 ))
+        path.addLine(to: CGPoint(x: 300, y: 300))
+        path.addLine(to: CGPoint(x: 100, y: 200))
+        path.closeSubpath()
         return path
     }
 }

@@ -9,11 +9,9 @@ import SwiftUI
 
 struct DynamicColoredCircle: View {
     @State var segments: Int = 5
-    let a: Angle = .degrees(120)
     @State var circleSize: Double = 1.0
     @State private var indicator: Double = 5.0
     @State private var isEditing: Bool = false
-    
     
     var body: some View {
             GeometryReader { geometry in
@@ -27,22 +25,14 @@ struct DynamicColoredCircle: View {
                         }
                         
                     )
-                    .onChange(of: indicator) { oldValue, newValue in    //
-                        self.segments = Int(newValue)
+                    .onChange(of: indicator) { oldValue, newValue in
+                        withAnimation(.bouncy(duration: 0.3)) {
+                            self.segments = Int(newValue)
+                        }
                     }
                     
-                    ZStack {
-                        ForEach(1...self.segments, id: \.self) { index in
-                            Circle()
-                                .trim(from: index == 1 ? 0 : CGFloat(index-1)/CGFloat(self.segments), to: CGFloat(index)/CGFloat(self.segments))
-                                .stroke(Color.random, lineWidth: 100)
-                                .onAppear() {
-                                    print(index % 2)
-                                }
-                                .frame(width: 200)
-                        }
+                    CircleViewComponent(segments: self.segments)
                         .frame(width: geometry.size.width, height: geometry.size.height)
-                    }
                     
                 }
                 
